@@ -8,19 +8,22 @@ const submitButton = document.getElementById("submit");
 const addBook = document.querySelector(".add");
 const form = document.getElementById("form");
 
-function Book(index, title, author, year, pages, read, rating) {
-    this.index = index;
-    this.title = title;
-    this.author = author;
-    this.year = year;
-    this.pages = pages;
-    this.read = Boolean(read);
-    this.rating = rating;
+class Book {
+    constructor(index, title, author, year, pages, read, rating) {
+        this.index = index;
+        this.title = title;
+        this.author = author;
+        this.year = year;
+        this.pages = pages;
+        this.read = read;
+        this.rating = rating;
+    }
+
+    bookRead() {
+        this.read = true;
+    }
 }
 
-Book.prototype.bookRead = function() {
-    this.read = !this.read;
-} 
 
 function addBookToLibrary(book) {
     myLibrary.push(book);
@@ -87,7 +90,6 @@ function submit(event) {
     // deleteCell.className = "delete";
     styleDeleteButton(deleteCell.lastChild);
     row.appendChild(deleteCell);
-    console.log(last.innerHTML);
     bookDisplay.insertBefore(row, bookDisplay.lastElementChild);
     dialog.close();
     form.reset();
@@ -127,7 +129,7 @@ document.addEventListener("DOMContentLoaded", function() {
             //decrement indices of all subsequent rows in the table
             const rows = libraryTable.querySelectorAll("tbody tr");
             for (let i = bookIndex - 1; i < rows.length - 2; i++) {
-                var row = rows[i + 1];
+                let row = rows[i + 1];
                 if (row) {
                     var rowIndexCell = row.querySelector("td:first-child");
                     rowIndexCell.textContent = i;
